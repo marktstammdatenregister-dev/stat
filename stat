@@ -3,11 +3,12 @@
 # summarize <SQLite export file> [export date]
 
 set -Eeuo pipefail
+script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" &>/dev/null && pwd)"
 
 d="${2:-now}"
 d="$(date -d "${d}" +"%Y-%m-%d")"
 
-for sql in query/*.sql; do
+for sql in "${script_dir}/query/"*.sql; do
   query_id="$(basename "${sql}" .sql)"
   result="$(sqlite3 "${1}" <"${sql}")"
   jq --null-input --compact-output \

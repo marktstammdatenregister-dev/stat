@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+#
+# summarize <SQLite export file> [export date]
+
+set -Eeuo pipefail
+
+d="${2:-now}"
+d="$(date -d "${d}" +"%Y-%m-%d")"
+
+for sql in query/*.sql; do
+  query_id="$(basename "${sql}" .sql)"
+  result="$(sqlite3 "${1}" <"${sql}")"
+  jq --null-input --compact-output \
+    --arg query "${query_id}" \
+    --arg date "${d}" \
+    --argjson result "${result}" \
+    '{date: $date, query: $query, result: $result}'
+done

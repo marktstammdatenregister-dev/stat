@@ -1,7 +1,5 @@
 {"date":"2022-02-15","query":"biomasse-anzahl","result":20433}
 {"date":"2022-02-15","query":"biomasse-brutto","result":8753214.865}
-{"date":"2022-02-15","query":"kernkraft-anzahl","result":3}
-{"date":"2022-02-15","query":"kernkraft-brutto","result":4291000}
 {"date":"2022-02-15","query":"solar-anzahl","result":2264840}
 {"date":"2022-02-15","query":"solar-brutto","result":60546674.7579956}
 {"date":"2022-02-15","query":"stromspeicher-anzahl","result":341042}
@@ -16,8 +14,6 @@
 {"date":"2022-02-15","query":"wind-see-brutto","result":7786818}
 {"date":"2022-03-02","query":"biomasse-anzahl","result":20464}
 {"date":"2022-03-02","query":"biomasse-brutto","result":8758536.565}
-{"date":"2022-03-02","query":"kernkraft-anzahl","result":3}
-{"date":"2022-03-02","query":"kernkraft-brutto","result":4291000}
 {"date":"2022-03-02","query":"solar-anzahl","result":2278261}
 {"date":"2022-03-02","query":"solar-brutto","result":60763547.2799951}
 {"date":"2022-03-02","query":"stromspeicher-anzahl","result":348434}
@@ -32,8 +28,6 @@
 {"date":"2022-03-02","query":"wind-see-brutto","result":7786818}
 {"date":"2022-03-06","query":"biomasse-anzahl","result":20460}
 {"date":"2022-03-06","query":"biomasse-brutto","result":8756101.505}
-{"date":"2022-03-06","query":"kernkraft-anzahl","result":3}
-{"date":"2022-03-06","query":"kernkraft-brutto","result":4291000}
 {"date":"2022-03-06","query":"solar-anzahl","result":2281611}
 {"date":"2022-03-06","query":"solar-brutto","result":60953883.2739949}
 {"date":"2022-03-06","query":"stromspeicher-anzahl","result":350355}
@@ -48,8 +42,6 @@
 {"date":"2022-03-06","query":"wind-see-brutto","result":7786818}
 {"date":"2022-03-07","query":"biomasse-anzahl","result":20460}
 {"date":"2022-03-07","query":"biomasse-brutto","result":8756131.505}
-{"date":"2022-03-07","query":"kernkraft-anzahl","result":3}
-{"date":"2022-03-07","query":"kernkraft-brutto","result":4291000}
 {"date":"2022-03-07","query":"solar-anzahl","result":2282130}
 {"date":"2022-03-07","query":"solar-brutto","result":60978645.1109949}
 {"date":"2022-03-07","query":"stromspeicher-anzahl","result":350599}

@@ -10,3 +10,9 @@
 {"date":"2022-03-06","query":"verbrennung-brutto","result":90480025.4360017}
 {"date":"2022-03-06","query":"wasser-brutto","result":5666887.833}
 {"date":"2022-03-06","query":"wind-brutto","result":63920774.281}
+{"date":"2022-03-07","query":"biomasse-brutto","result":8756131.505}
+{"date":"2022-03-07","query":"kernkraft-brutto","result":4291000}
+{"date":"2022-03-07","query":"solar-brutto","result":60978645.1109949}
+{"date":"2022-03-07","query":"verbrennung-brutto","result":90480064.1360017}
+{"date":"2022-03-07","query":"wasser-brutto","result":5666893.833}
+{"date":"2022-03-07","query":"wind-brutto","result":63920774.281}

@@ -1,11 +1,36 @@
-name: Dummy
+name: Weekly
 on:
+  # Every Wednesday at 08:00 UTC
+  schedule: [{cron: '0 8 * * 3'}]
+  # Enable manual trigger
   workflow_dispatch:
 
 jobs:
-  build:
+  weekly:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - name: Run a one-line script
-        run: echo Hello, world!
+
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.9'
+        cache: pip
+
+    - name: Check out code
+      uses: actions/checkout@v2
+
+    - name: Install dependencies
+      run: pip install -r requirements.txt
+
+    - name: Plot
+      run: |
+        set -Eeuxo pipefail
+
+        ./plot plot.png toot.txt
+
+    - name: Toot
+      run: |
+        set -Eeuxo pipefail
+
+        cat {{secrets.MASTO_ACCESS_KEY}} >token.secret
+        ./toot.py toot.txt plot.png

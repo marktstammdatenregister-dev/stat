@@ -26,7 +26,7 @@ jobs:
       run: |
         set -Eeuxo pipefail
 
-        ./plot plot.png toot.txt
+        ./plot.py plot.png toot.txt
 
     - name: Toot
       run: |

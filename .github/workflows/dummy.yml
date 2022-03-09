@@ -32,5 +32,5 @@ jobs:
       run: |
         set -Eeuxo pipefail
 
-        cat {{secrets.MASTO_ACCESS_KEY}} >token.secret
+        echo '{{secrets.MASTO_ACCESS_KEY}}' >token.secret
         ./toot.py toot.txt plot.png

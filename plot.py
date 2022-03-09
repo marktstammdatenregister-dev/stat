@@ -1,10 +1,16 @@
+#!/usr/bin/env python3
+#
+# Usage:
+#     $ ./plot.py <output image path> | tee <output text path>
+
 from datetime import datetime, timedelta
-from textwrap import dedent
+import matplotlib as mpl
+import matplotlib.dates as dates
 import matplotlib.pyplot as plt
 import matplotlib.ticker as ticker
-import matplotlib.dates as dates
 import pandas as pd
 import seaborn as sns
+import sys
 
 
 # Best estimate of the total energy generation capacity at the end of 2021.
@@ -137,7 +143,8 @@ def main():
     sns.set_theme()
     sns.set_style("white")
     sns.set_palette("colorblind")
-    sns.set_context("talk")
+    sns.set_context("talk", font_scale=1.)
+    mpl.rcParams["font.family"] = "monospace"
     fig, axes = plt.subplots(1, 3, figsize=(15, 4))
 
     df = pd.DataFrame.from_records(records)
@@ -182,10 +189,10 @@ def main():
     axes[0].set_ylabel("Bruttoleistung\n")
 
     plt.tight_layout()
-    plt.savefig("plot.png", pad_inches=0.3)
+    plt.savefig(sys.argv[1])
 
     print(
-        f"Zuwachs erneuerbarer Energien von {d1.strftime('%Y-%m-%d')} bis {d2.strftime('%Y-%m-%d')}:"
+        f"Ausbau erneuerbarer Energien von {d1.strftime('%Y-%m-%d')} bis {d2.strftime('%Y-%m-%d')}:"
     )
     for typ in typs:
         data = df[df["typ"] == typ]
@@ -194,21 +201,18 @@ def main():
         d2_actual = data[data["date"] == d2.strftime("%Y-%m-%d")]["value"].values[0]
         diff_actual = d2_actual - d1_actual
 
-        d1_actual = f"{(d1_actual * 1e-9):.02f} GW"
+        if diff_actual < 1000:
+            diff_actual = "unverändert bei"
+        else:
+            diff_actual = f"{(diff_actual * 1e-9):+.02f} GW auf"
         d2_actual = f"{(d2_actual * 1e-9):.02f} GW"
-        diff_actual = f"{(diff_actual * 1e-9):+.02f} GW"
-
-        d1_planned = f"{(expected_kw(typ, d1) * 1e-6):.02f} GW"
         d2_planned = f"{(expected_kw(typ, d2) * 1e-6):.02f} GW"
-        diff_planned = (
-            f"{((expected_kw(typ, d2) - expected_kw(typ, d1)) * 1e-6):+.02f} GW"
-        )
 
-        print(f"• {name[typ]}: {diff_actual} auf {d2_actual}, Ziel: {d2_planned}.")
+        print(f"• {name[typ]}: {diff_actual} {d2_actual} (Soll: {d2_planned})")
 
     print(
         """
-Definitionen und Quellen: https://marktstammdatenregister.dev/bot"""
+Details: https://marktstammdatenregister.dev/statbot"""
     )
 
 

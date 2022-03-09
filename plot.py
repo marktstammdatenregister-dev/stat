@@ -204,9 +204,7 @@ def main():
             f"{((expected_kw(typ, d2) - expected_kw(typ, d1)) * 1e-6):+.02f} GW"
         )
 
-        print(
-            f"• {name[typ]}: {d2_actual} ({diff_actual}) registriert, Sollwert {d2_planned}."
-        )
+        print(f"• {name[typ]}: {diff_actual} auf {d2_actual}, Ziel: {d2_planned}.")
 
     print(
         """

@@ -26,11 +26,11 @@ jobs:
       run: |
         set -Eeuxo pipefail
 
-        ./plot.py plot.png | tee toot.txt
+        ./plot plot.png | tee toot.txt
 
     - name: Toot
       run: |
         set -Eeuxo pipefail
 
         echo '${{secrets.MASTO_ACCESS_KEY}}' >token.secret
-        ./toot.py toot.txt plot.png
+        ./toot toot.txt plot.png

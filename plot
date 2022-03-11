@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 #
 # Usage:
-#     $ ./plot.py <output image path> | tee <output text path>
+#     $ ./plot.py <end date> <output image path> | tee <output text path>
 
 from datetime import datetime, timedelta
 import matplotlib as mpl
@@ -95,16 +95,17 @@ def expected_kw(typ, date):
     return expected_kw_kw
 
 
+df = pd.read_json("stat.json", lines=True)
+
+
 def actual(typ, date):
-    df = pd.read_json("stat.json", lines=True)
-    return df[(df["query"] == typ) & (df["date"] == date)]["result"].values[0]
+    global df
+    d = date.strftime("%Y-%m-%d")
+    return df[(df["query"] == typ) & (df["date"] == d)]["result"].values[0]
 
 
 def main():
-    typ = "solar-brutto"
-
-    d2 = datetime.today()
-    d2 = datetime(year=d2.year, month=d2.month, day=d2.day)
+    d2 = datetime.strptime(sys.argv[1], "%Y-%m-%d")
     d1 = d2 - timedelta(days=7)
 
     typs = ["solar-brutto", "wind-land-brutto", "wind-see-brutto"]
@@ -143,7 +144,7 @@ def main():
     sns.set_theme()
     sns.set_style("white")
     sns.set_palette("colorblind")
-    sns.set_context("talk", font_scale=1.)
+    sns.set_context("talk", font_scale=1.0)
     mpl.rcParams["font.family"] = "monospace"
     fig, axes = plt.subplots(1, 3, figsize=(15, 4))
 
@@ -189,11 +190,9 @@ def main():
     axes[0].set_ylabel("Bruttoleistung\n")
 
     plt.tight_layout()
-    plt.savefig(sys.argv[1])
+    plt.savefig(sys.argv[2])
 
-    print(
-        f"Ausbau erneuerbarer Energien von {d1.strftime('%Y-%m-%d')} bis {d2.strftime('%Y-%m-%d')}:"
-    )
+    print(f"Kapazität erneuerbarer Energien in KW {d1.strftime('%W')}:")
     for typ in typs:
         data = df[df["typ"] == typ]
 
@@ -214,6 +213,10 @@ def main():
         """
 Details: https://marktstammdatenregister.dev/statbot"""
     )
+
+    if d2.strftime("%w") != "1":
+        # This script is meant to run on Mondays only.
+        exit(1)
 
 
 if __name__ == "__main__":

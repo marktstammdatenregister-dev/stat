@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 #
 # Usage:
-#     ./toot.py <toot text file> <attachment file>
+#     ./toot <toot text file> <attachment file>
 
 from mastodon import Mastodon
 import sys

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 #
 # Usage:
-#     $ ./plot.py <end date> <output image path> | tee <output text path>
+#     $ ./plot <end date> <output image path> | tee <output text path>
 
 from datetime import datetime, timedelta
 import matplotlib as mpl
@@ -192,7 +192,7 @@ def main():
     plt.tight_layout()
     plt.savefig(sys.argv[2])
 
-    print(f"Kapazität erneuerbarer Energien in KW {d1.strftime('%W')}:")
+    print(f"Kapazität erneuerbarer Energien in KW {d1.strftime('%W')}:\n")
     for typ in typs:
         data = df[df["typ"] == typ]
 

@@ -4,6 +4,7 @@
 #     $ ./plot <end date> <output image path> | tee <output text path>
 
 from datetime import datetime, timedelta
+from math import isclose
 import matplotlib as mpl
 import matplotlib.dates as dates
 import matplotlib.pyplot as plt
@@ -62,6 +63,16 @@ increase_gw_per_year = {
     },
 }
 
+
+# https://www.bmwi.de/Redaktion/DE/Downloads/Energie/220111_eroeffnungsbilanz_klimaschutz.pdf?__blob=publicationFile#%5B%7B%22num%22%3A137%2C%22gen%22%3A0%7D%2C%7B%22name%22%3A%22XYZ%22%7D%2C77.9527%2C545.9487%2C0%5D
+# It's not clear from the text, but the graphs show that these targets are for
+# the end of 2030, i.e. for 2030-12-31.
+target_2030_kw = {
+    "solar-brutto": 200e6,
+    "wind-land-brutto": 100e6,
+    "wind-see-brutto": 30e6,
+}
+
 name = {
     "biomasse-brutto": "Biomasse",
     "solar-brutto": "Solar",
@@ -73,9 +84,25 @@ name = {
 
 
 def expected_kw(typ, date):
-    # date = datetime.strptime(date, "%Y-%m-%d")
+    """
+    Returns the expected capacity for the given type at the given date, in kilowatt (kW).
+
+    >>> isclose(expected_kw("solar-brutto", datetime(2030, 12, 31)), target_2030_kw["solar-brutto"], rel_tol=1e-3)
+    True
+    >>> isclose(expected_kw("wind-land-brutto", datetime(2030, 12, 31)), target_2030_kw["wind-land-brutto"], rel_tol=1e-3)
+    True
+    >>> isclose(expected_kw("wind-see-brutto", datetime(2030, 12, 31)), target_2030_kw["wind-see-brutto"], rel_tol=1e-3)
+    True
+    """
+
     if date.year < 2022 or date.year > 2030:
         raise "calculation only valid for 2022 to 2030"
+
+    # Correction factor for the annual increase. Use this to scale the annual
+    # increase so we end up precisely with the target values.
+    c = (target_2030_kw[typ] - before_2022_kw[typ]) / (
+        sum(gw for gw in increase_gw_per_year[typ].values()) * 1e6
+    )
 
     expected_kw_kw = before_2022_kw[typ]
     if expected_kw_kw is None:
@@ -83,7 +110,7 @@ def expected_kw(typ, date):
 
     for year, gw in increase_gw_per_year[typ].items():
         if year < date.year:
-            expected_kw_kw += gw * 1e6
+            expected_kw_kw += c * gw * 1e6
 
     gw_per_year = increase_gw_per_year[typ][date.year]
     if gw_per_year is None:
@@ -91,7 +118,7 @@ def expected_kw(typ, date):
 
     days_in_year = (datetime(date.year + 1, 1, 1) - datetime(date.year, 1, 1)).days
     days_since_jan1 = (date - datetime(date.year, 1, 1)).days
-    expected_kw_kw += gw_per_year * 1e6 * days_since_jan1 / days_in_year
+    expected_kw_kw += c * gw_per_year * 1e6 * days_since_jan1 / days_in_year
     return expected_kw_kw
 
 

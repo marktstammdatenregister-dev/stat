@@ -62,6 +62,57 @@ increase_gw_per_year = {
     },
 }
 
+# https://www.bmwi.de/Redaktion/DE/Artikel/Service/Gesetzesvorhaben/entwurf-eines-zweiten-gesetzes-zur-aenderung-des-windenergie-auf-see-gesetzes-und-anderer-vorschriften.html
+# https://www.bmwi.de/Redaktion/DE/Downloads/E/Kerninhalte_EEG_WindSeeG.pdf?__blob=publicationFile&v=4
+# https://web.archive.org/web/20220313055817/https://www.bmwi.de/Redaktion/DE/Downloads/E/Kerninhalte_EEG_WindSeeG.pdf?__blob=publicationFile&v=4
+increase_gw_per_year = {
+    "solar-brutto": {
+        2022: 7,
+        2023: 9,
+        2024: 13,
+        2025: 16,
+        2026: 18,
+        2027: 19,
+        2028: 20,
+        2029: 20,
+        2030: 20,
+        # Total: 142
+        # + current 62.0
+        # = 204 ~ 200
+    },
+    "wind-land-brutto": {
+        2022: 3,
+        2023: 5,
+        2024: 6,
+        2025: 8,
+        2026: 9,
+        2027: 10,
+        2028: 10,
+        2029: 10,
+        2030: 10,
+        # Total: 71
+        # + current 55.93
+        # = 126.93 ~! 100 ?!
+    },
+    # https://www.bmwi.de/Redaktion/DE/Downloads/E/entwurf-eines-zweiten-gesetzes-zur-aenderung-des-windenergie-auf-see-gesetzes-und-anderer-vorschriften.pdf?__blob=publicationFile&v=6
+    # https://web.archive.org/web/20220307213043/https://www.bmwi.de/Redaktion/DE/Downloads/E/entwurf-eines-zweiten-gesetzes-zur-aenderung-des-windenergie-auf-see-gesetzes-und-anderer-vorschriften.pdf?__blob=publicationFile&v=6
+    # Stand 04.03.2022
+    "wind-see-brutto": {
+        2022: 0.5,
+        2023: 0.5,
+        2024: 0.5,
+        2025: 2,
+        2026: 1,
+        2027: 1,
+        2028: 1.8,
+        2029: 6,
+        2030: 9,
+        # Total: 22.3
+        # + current 7.9
+        # = 30.2 ~ 30
+    },
+}
+
 
 # https://www.bmwi.de/Redaktion/DE/Downloads/Energie/220111_eroeffnungsbilanz_klimaschutz.pdf?__blob=publicationFile#%5B%7B%22num%22%3A137%2C%22gen%22%3A0%7D%2C%7B%22name%22%3A%22XYZ%22%7D%2C77.9527%2C545.9487%2C0%5D
 # It's not clear from the text, but the graphs show that these targets are for

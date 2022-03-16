@@ -1,10 +1,9 @@
 #!/usr/bin/env python3
 #
 # Usage:
-#     $ ./plot <end date> <output image path> | tee <output text path>
+#     $ ./plot.py <end date> <output image path> | tee <output text path>
 
 from datetime import datetime, timedelta
-from math import isclose
 import matplotlib as mpl
 import matplotlib.dates as dates
 import matplotlib.pyplot as plt
@@ -83,30 +82,44 @@ name = {
 }
 
 
+def correction(typ):
+    """
+    Correction factor for the annual increase. Use this to scale the annual
+    increase so we end up precisely with the target values.
+
+    >>> from math import isclose
+    >>> isclose(correction("solar-brutto"), 1.0, rel_tol=1e-1)
+    >>> isclose(correction("wind-land-brutto"), 1.0, rel_tol=1e-1)
+    >>> isclose(correction("wind-see-brutto"), 1.0, rel_tol=1e-1)
+    """
+
+    return (target_2030_kw[typ] - before_2022_kw[typ]) / (
+        sum(gw for gw in increase_gw_per_year[typ].values()) * 1e6
+    )
+
+
 def expected_kw(typ, date):
     """
     Returns the expected capacity for the given type at the given date, in kilowatt (kW).
 
-    >>> isclose(expected_kw("solar-brutto", datetime(2030, 12, 31)), target_2030_kw["solar-brutto"], rel_tol=1e-3)
+    >>> from math import isclose
+    >>> d = datetime(2030, 12, 31)
+    >>> isclose(expected_kw("solar-brutto", d), target_2030_kw["solar-brutto"], rel_tol=1e-3)
     True
-    >>> isclose(expected_kw("wind-land-brutto", datetime(2030, 12, 31)), target_2030_kw["wind-land-brutto"], rel_tol=1e-3)
+    >>> isclose(expected_kw("wind-land-brutto", d), target_2030_kw["wind-land-brutto"], rel_tol=1e-3)
     True
-    >>> isclose(expected_kw("wind-see-brutto", datetime(2030, 12, 31)), target_2030_kw["wind-see-brutto"], rel_tol=1e-3)
+    >>> isclose(expected_kw("wind-see-brutto", d), target_2030_kw["wind-see-brutto"], rel_tol=1e-3)
     True
     """
 
     if date.year < 2022 or date.year > 2030:
         raise "calculation only valid for 2022 to 2030"
 
-    # Correction factor for the annual increase. Use this to scale the annual
-    # increase so we end up precisely with the target values.
-    c = (target_2030_kw[typ] - before_2022_kw[typ]) / (
-        sum(gw for gw in increase_gw_per_year[typ].values()) * 1e6
-    )
-
     expected_kw_kw = before_2022_kw[typ]
     if expected_kw_kw is None:
         raise f"no base value known for {typ}"
+
+    c = correction(typ)
 
     for year, gw in increase_gw_per_year[typ].items():
         if year < date.year:

@@ -180,3 +180,17 @@
 {"date":"2022-03-16","query":"wind-land-brutto","result":56174638.681}
 {"date":"2022-03-16","query":"wind-see-anzahl","result":1499}
 {"date":"2022-03-16","query":"wind-see-brutto","result":7786818}
+{"date":"2022-03-17","query":"biomasse-anzahl","result":20458}
+{"date":"2022-03-17","query":"biomasse-brutto","result":8746056.185}
+{"date":"2022-03-17","query":"solar-anzahl","result":2292326}
+{"date":"2022-03-17","query":"solar-brutto","result":62135265.6089947}
+{"date":"2022-03-17","query":"stromspeicher-anzahl","result":356326}
+{"date":"2022-03-17","query":"stromspeicher-kapazitaet","result":340472632.48035}
+{"date":"2022-03-17","query":"verbrennung-anzahl","result":75124}
+{"date":"2022-03-17","query":"verbrennung-brutto","result":90419810.7960018}
+{"date":"2022-03-17","query":"wasser-anzahl","result":8430}
+{"date":"2022-03-17","query":"wasser-brutto","result":5667070.033}
+{"date":"2022-03-17","query":"wind-land-anzahl","result":29036}
+{"date":"2022-03-17","query":"wind-land-brutto","result":56177142.181}
+{"date":"2022-03-17","query":"wind-see-anzahl","result":1499}
+{"date":"2022-03-17","query":"wind-see-brutto","result":7786818}

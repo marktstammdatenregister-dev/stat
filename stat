@@ -10,7 +10,7 @@ d="$(date -d "${d}" +"%Y-%m-%d")"
 
 for sql in "${script_dir}/query/"*.sql; do
   query_id="$(basename "${sql}" .sql)"
-  result="$(sqlite3 "${1}" <"${sql}")"
+  result="$(sqlite3 --readonly "${1}" <"${sql}")"
   jq --null-input --compact-output \
     --arg query "${query_id}" \
     --arg date "${d}" \

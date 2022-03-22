@@ -1,3 +1,4 @@
+-- Neue Bruttoleistung pro Kalenderwoche aller Photovoltaikeinheiten seit Beginn 2022.
 with ProWoche as (
   select
     strftime("%Y-%W", Inbetriebnahmedatum) as Kalenderwoche,
@@ -8,23 +9,13 @@ with ProWoche as (
     Inbetriebnahmedatum >= "2022-01-01"
   group by
     Kalenderwoche
-),
-ProWocheKumulativ as (
-  select
-    Kalenderwoche,
-    sum(BruttoleistungKW) over (
-      order by
-        Kalenderwoche
-    ) as BruttoleistungKumulativKW
-  from
-    ProWoche
 )
 select
   json_group_object(
     Kalenderwoche,
     cast(
-      printf("%.03f", BruttoleistungKumulativKW) as real
+      printf("%.03f", BruttoleistungKW) as real
     )
   )
 from
-  ProWocheKumulativ
+  ProWoche

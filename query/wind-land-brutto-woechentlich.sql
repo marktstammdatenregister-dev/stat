@@ -21,9 +21,7 @@ with ProWoche as (
 select
   json_group_object(
     Kalenderwoche,
-    cast(
-      printf("%.03f", BruttoleistungKW) as real
-    )
+    round(BruttoleistungKW, 3)
   )
 from
   ProWoche

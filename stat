@@ -8,6 +8,7 @@ script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" &>/dev/null && pwd)"
 d="${2:-now}"
 d="$(date -d "${d}" +"%Y-%m-%d")"
 
+set -x
 for sql in "${script_dir}/query/"*.sql; do
   query_id="$(basename "${sql}" .sql)"
   result="$(sqlite3 --readonly "${1}" <"${sql}")"
